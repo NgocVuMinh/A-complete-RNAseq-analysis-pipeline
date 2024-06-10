@@ -1,7 +1,9 @@
 # A complete RNAseq analysis pipeline
 
 ### [Ngoc M. Vu](https://github.com/NgocVuMinh)
-This repository contains command line scripts and R scripts used to process RNA sequencing data. This also serves as the supplementary materials in support of my undergraduate thesis titled "RNAseq analysis of breast cancer cells co-cultured with adipose-derived stem cells" and an in-submission research paper (DOI will be updated soon). 
+This repository contains command line scripts and R scripts used to process RNA sequencing data. This also serves as the supplementary materials in support of my undergraduate thesis titled ***"RNAseq analysis of MCF-7 breast cancer cells co-cultured with adipose-derived stem cells"***. The thesis was conducted at the Department of Bioinformatics, Institute of Biotechnology, Vietnam Academy of Science and Technology (VAST), and was successfully defended at the Cell Biology Department, Faculty of Biology, VNU Hanoi University of Science. 
+
+The thesis was conducted within the framework of a research project at VAST coded TĐTBG0.04/21-24, and supports an in-submission research paper. 
 
 Two sample types were included in this analysis:
 * CT - control samples: cancer cells cultured in standard condition
@@ -17,7 +19,7 @@ The number of sample types does not affect the command line scripts, but adjustm
 
 ## Bulk RNA sequencing data
 
-The sample FASTQ files will be provided once our paper is published. The original data was provided by the Department of Bioinformatics, Institute of Biotechnology, Vietnam Academy of Science and Technology (VAST).
+The sample FASTQ files will be provided (perhaps) once our paper is published. The original data was provided by the Department of Bioinformatics, Institute of Biotechnology, Vietnam Academy of Science and Technology (VAST).
 
 
 ## Sequence processing pipeline
@@ -74,7 +76,16 @@ All scripts were run in R-Studio, R version 4.3.1.
 
 The Bioconductor’s *DESeq2* package was used to normalize count data, estimate dispersions, and identify differentially expressed genes. Genes with count lower than 10 were filtered out. A gene is considered differentially expressed in the experimental group compared to the control group if its *adjusted p-value* ≤ 0.05 and | *log2foldchange* | ≥ 1.
 
-Gene Ontology (GO) terms and Kyoto Encyclopedia of Genes and Genomes (KEGG) enrichment analysis were implemented to assess biological processes and pathways. The R Bioconductor’s *clusterProfiler* package was used to retrieve the enriched GO categories and KEGG pathways associated with the differentially expressed geneset. Functions from the *Pathview* package and *enrichplot* package were used to visualize the enriched pathways.
+Three functional databases were used:
+1. Gene Ontology (GO) terms
+2. Kyoto Encyclopedia of Genes and Genomes (KEGG) pathways
+3. Hallmark gene sets from the Molecular Signature Database (MSigDB)
+
+Two enrichment analysis methods were applied: 
+1. Overrepresentation Analysis (ORA)
+2. Gene Set Enrichment Analysis (GSEA) 
+
+The R Bioconductor’s *clusterProfiler* package was used for functional enrichment analysis. Functions from the *Pathview* package and *enrichplot* package were used to visualize the enriched pathways.
 
 Visualization methods:
 * Volcano plot
@@ -109,11 +120,13 @@ library(enrichplot)
 R scripts:
 
 ```
-count_processing.R      # running DESeq2
-visualization.R         # visualization
-heatmap.R               # heatmap
-gene_ontology.R         # GO analysis
-kegg.R                  # KEGG analysis
+count_processing.R          # running DESeq2
+volcano.R                   # overview using volcano plot
+heatmap.R                   # overview using heatmap
+heatmap_selected_genes.R    # heatmap for selected genes
+pathway_ora.R               # pathway analysis using ORA method
+pathway_gsea.R              # pathway analysis using GSEA method
+pathway_gsea_supp.R         # other visualizations for GSEA results
 ```
 
 ## Tutorials and other references
