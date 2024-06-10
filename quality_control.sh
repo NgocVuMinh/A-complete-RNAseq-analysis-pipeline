@@ -18,7 +18,7 @@ log_file_path="./fastqc/fastqc.log"
 # start logging
 echo "$(date) - Running FASTQC" 2>&1 | tee -a $log_file_path
 fastqc -v 2>&1 | tee -a $log_file_path
-printf '\n\n\n' 2>&1 | tee -a "$log_file_path"
+printf "\n\n\n" 2>&1 | tee -a "$log_file_path"
 
 # loop through each sample
 while IFS= read -r sample; do
@@ -26,7 +26,7 @@ while IFS= read -r sample; do
     echo "$(date) - Processing ${sample}" 2>&1 | tee -a $log_file_path
     fastqc "./fastq/${sample}_1.fq.gz" "./fastq/${sample}_2.fq.gz" -o ./fastqc
     echo "$(date) - Completed processing ${sample}" 2>&1 | tee -a $log_file_path
-    printf '\n' 2>&1 | tee -a "$log_file_path"
+    printf "\n" 2>&1 | tee -a "$log_file_path"
 
 done < "$samples"
 

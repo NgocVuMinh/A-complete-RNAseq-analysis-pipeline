@@ -20,14 +20,14 @@ log_file_path_rseqc="./mapping_check/rseqc/rnaseq.log"
 # start logging QUALIMAP RNASEQ
 echo "$(date) - Starting QUALIMAP RNASEQ" 2>&1 | tee -a $log_file_path_qualimap
 qualimap --version 2>&1 | tee -a $log_file_path_qualimap
-printf '\n\n\n' 2>&1 | tee -a $log_file_path_qualimap
+printf "\n\n\n" 2>&1 | tee -a $log_file_path_qualimap
 
 # QUALIMAP RNASEQ: loop through each sample
 while IFS= read -r sample; do
     echo "$(date) - Running qualimap rnaseq for ${sample}" 2>&1 | tee -a $log_file_path_qualimap
     qualimap rnaseq -bam ./processed/${sample}_sorted.bam -gtf ./ref/gh38.gtf -outformat HTML -outfile ${sample} -outdir ./mapping_check/qualimap/${sample} --paired --sorted --java-mem-size=4G -npb 50 2>&1 | tee -a $log_file_path_qualimap
     echo "$(date) - Completed converting for ${sample}" 2>&1 | tee -a $log_file_path_qualimap
-    printf '\n' 2>&1 | tee -a $log_file_path_qualimap
+    printf "\n" 2>&1 | tee -a $log_file_path_qualimap
 
 done < "$samples"
 
