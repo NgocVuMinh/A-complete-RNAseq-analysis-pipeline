@@ -22,7 +22,7 @@ filepath <- file.path(path,paste(labs[1],"clean2.txt",sep=""))
 for (i in labs) {
   filepath <- file.path(path,paste(i,".txt",sep=""))
   cov[[i]] <- read.table(filepath,sep = "\t", header=T, stringsAsFactors=FALSE)
-  colnames(cov[[i]]) <- c("Geneid", substr(i, 1, 3))
+  colnames(cov[[i]]) <- c("Geneid", substr(i, 1, 3)) # adjust to get sample names from file names
 }
 
 print(sprintf("File read END %s", format(Sys.time(),"%b %d %Y-%H-%M")))
@@ -32,6 +32,6 @@ print(sprintf("Merging START %s", format(Sys.time(),"%b %d %Y-%H-%M")))
 df <- Reduce(function(x,y) merge(x = x, y = y, by ="Geneid"), cov)
 print(sprintf("Merging END %s", format(Sys.time(),"%b %d %Y-%H-%M")))
 
-write.table(df, paste(path, "featureCounts_merged",".txt",sep=""), sep="\t", quote= F, row.names = F)
+write.table(df, "featureCounts_merged.txt", sep="\t", quote= F, row.names = F)
 
 print(sprintf("Merged file saved %s", format(Sys.time(),"%b %d %Y-%H-%M")))
